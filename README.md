@@ -7,8 +7,8 @@
 
 ## Estructura de carpetas
 
-App.js
-index.js
+* App.js
+* index.js
  * components
    * styles
      * Contact.js
