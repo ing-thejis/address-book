@@ -18,10 +18,10 @@
 
 
 ## Recursos usados
-### Boostrap [https://getbootstrap.com/]
-### BootstrapReact [https://react-bootstrap.github.io/]
-### axios [https://www.npmjs.com/package/axios]
-### react-icons [https://react-icons.github.io/react-icons/]
+#### Boostrap [https://getbootstrap.com/]
+#### BootstrapReact [https://react-bootstrap.github.io/]
+#### axios [https://www.npmjs.com/package/axios]
+#### react-icons [https://react-icons.github.io/react-icons/]
 
 
 
