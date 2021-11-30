@@ -11,8 +11,10 @@ App.js
 index.js
  * components
    * styles
-   Contact.js
-   Navbar.js
+     * Contact.js
+     * Navbar.js
+   * Contact.js
+   * Navbar.js
 
 
 ## Recursos usados
