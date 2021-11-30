@@ -1,9 +1,9 @@
 # Address-Book
 
 ## Libreria Usada
-*** React Js
+#### React Js
 ## Lenguaje Usado
-*** Javascript
+#### Javascript
 
 ## Estructura de carpetas
 
@@ -24,7 +24,7 @@ index.js
 
 
 ## Instalacion
-*** `npm i` /  `npm install`
+### `npm i` /  `npm install`
 
 ## Ejecutar / Iniciar App
-*** `npm start`
+### `npm start`
