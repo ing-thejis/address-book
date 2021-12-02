@@ -1,11 +1,10 @@
 import React from "react";
-import { styles } from "./styles/Navbar";
 
 const Navbar = () => {
   return (
-    <div className="container-fluid" style={styles.container}>
+    <div className="container-fluid bg-dark d-flex justify-content-center">
       <div className="row">
-        <h1>LIBRETA DE CONTACTOS</h1>
+        <h1 className="text-light" >LIBRETA DE CONTACTOS</h1>
       </div>
     </div>
   );
