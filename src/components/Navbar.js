@@ -1,12 +1,14 @@
-import React from 'react'
-import { styles } from './styles/Navbar'
+import React from "react";
+import { styles } from "./styles/Navbar";
 
 const Navbar = () => {
-    return (
-        <div style={styles.container}>
-            LIBRETA DE CONTACTOS
-        </div>
-    )
-}
+  return (
+    <div className="container-fluid" style={styles.container}>
+      <div className="row">
+        <h1>LIBRETA DE CONTACTOS</h1>
+      </div>
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;
