@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Image, Modal, Row } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { styles } from "./styles/Contacts";
 
 const baseURL = "https://618aac0d34b4f400177c480e.mockapi.io/api/v1/contactos/";
-
 const myStore = window.localStorage;
+
 
 const Contacts = (props) => {
   console.log(myStore);
@@ -17,7 +16,7 @@ const Contacts = (props) => {
   const [modalUpdate, setModalUpdate] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
 
-  const [contactSelect, setContactSelect] = useState({
+  const [contactSelected, setContactSelected] = useState({
     id: "",
     nombre: "",
     apellido: "",
@@ -27,7 +26,7 @@ const Contacts = (props) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContactSelect((prevState) => ({
+    setContactSelected((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -62,26 +61,26 @@ const Contacts = (props) => {
   };
 
   const requestPOST = async () => {
-    await axios.post(baseURL, contactSelect).then((response) => {
+    await axios.post(baseURL, contactSelected).then((response) => {
       setContactData(contactData.concat(response.data));
       OpenCloseModal("INSERT");
     });
-    console.log(contactSelect);
+    console.log(contactSelected);
   };
 
   const requestPUT = async () => {
     await axios
-      .put(baseURL + contactSelect.id, contactSelect)
+      .put(baseURL + contactSelected.id, contactSelected)
       .then((response) => {
         var newContactData = contactData;
         newContactData.map((contact) => {
-          if (contactSelect.id === contact.id) {
-            contact.nombre = contactSelect.nombre;
-            contact.apellido = contactSelect.apellido;
-            contact.telefono = contactSelect.telefono;
-            contact.direccion = contactSelect.direccion;
+          if (contactSelected.id === contact.id) {
+            contact.nombre = contactSelected.nombre;
+            contact.apellido = contactSelected.apellido;
+            contact.telefono = contactSelected.telefono;
+            contact.direccion = contactSelected.direccion;
           }
-          return 0;
+          return contactSelected;
         });
         setContactData(newContactData);
         console.log(
@@ -92,9 +91,9 @@ const Contacts = (props) => {
   };
 
   const requestDEL = async () => {
-    await axios.delete(baseURL + contactSelect.id).then((response) => {
+    await axios.delete(baseURL + contactSelected.id).then((response) => {
       setContactData(
-        contactData.filter((contact) => contact.id !== contactSelect.id)
+        contactData.filter((contact) => contact.id !== contactSelected.id)
       );
       myStore.removeItem("contact");
       OpenCloseModal("DELETE");
@@ -102,7 +101,7 @@ const Contacts = (props) => {
   };
 
   const selectContact = (contact, typeCase) => {
-    setContactSelect(contact);
+    setContactSelected(contact);
     switch (typeCase) {
       case "Update":
         setModalUpdate(true);
@@ -120,48 +119,45 @@ const Contacts = (props) => {
   }, []);
 
   const bodyInsert = (
-    <div style={styles.modal}>
+    <div className="d-flex justify-content-center align-items-center flex-column py-4">
       <div style={{ padding: "10px" }}><b>Agregar un nuevo contacto</b></div>
       <form>
-        <Form.Group className="mb-3" controlId="formGroupName">
-          <Form.Control
+        <div className="form-group mb-3" controlId="formGroupName">
+          <input className="form-control"
             name="nombre"
             type="text"
             placeholder="Nombres"
             onChange={handleChange}
             value={contactData.name}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupLastName">
-          
-          <Form.Control
+        </div >
+        <div  className="form-group mb-3" controlId="formGroupLastName">
+          <input className="form-control"
             name="apellido"
             type="text"
             placeholder="Apellidos"
             onChange={handleChange}
             value={contactData.surname}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupTel">
-          
-          <Form.Control
+        </div >
+        <div  className="form-group mb-3" controlId="formGroupTel">
+          <input className="form-control"
             name="telefono"
             type="text"
             placeholder="Telefono"
             onChange={handleChange}
             value={contactData.phone}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupAddress">
-          
-          <Form.Control
+        </div >
+        <div className="form-group mb-3" controlId="formGroupAddress">
+          <input className="form-control"
             name="direccion"
             type="text"
             placeholder="Dirección"
             onChange={handleChange}
             value={contactData.address}
           />
-        </Form.Group>
+        </div >
         <div className="d-flex justify-content-center">
           <button type="button" className="btn btn-success mx-3 w-50" onClick={() => requestPOST()}>
             Crear
@@ -175,69 +171,62 @@ const Contacts = (props) => {
   );
 
   const bodyUpdate = (
-    <div style={styles.modal}>
-      <div>Editar contacto {contactSelect.id}</div>
-      <Form>
-        <Form.Group className="mb-3" controlId="formGroupName">
-          <Form.Label style={styles.label}>Nombres</Form.Label>
-          <Form.Control
+    <div className="d-flex justify-content-center align-items-center flex-column py-4">
+      <div className="text-uppercase mb-4"><b>Editar contacto {contactSelected.id}</b></div>
+      <form>
+        <div className="form-group mb-3" controlId="formGroupName">
+          <input className="form-control"
             name="nombre"
             type="text"
             placeholder="Nombres"
             onChange={handleChange}
-            value={contactSelect && contactData.name}
+            value={contactSelected && contactSelected.nombre}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupLastName">
-          <Form.Label style={styles.label}>Apellido</Form.Label>
-          <Form.Control
+        </div>
+        <div className="form-group mb-3" controlId="formGroupLastName">
+          <input className="form-control"
             name="apellido"
             type="text"
             placeholder="Apellidos"
             onChange={handleChange}
-            value={contactSelect && contactData.surname}
+            value={contactSelected && contactSelected.apellido}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupTel">
-          <Form.Label style={styles.label}>Teléfono</Form.Label>
-          <Form.Control
+        </div>
+        <div className="form-group mb-3" controlId="formGroupTel">
+          <input className="form-control"
             name="telefono"
             type="text"
             placeholder="Telefono"
             onChange={handleChange}
-            value={contactSelect && contactData.phone}
+            value={contactSelected && contactSelected.telefono}
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formGroupAddress">
-          <Form.Label style={styles.label}>Dirección</Form.Label>
-          <Form.Control
+        </div>
+        <div className="form-group mb-3" controlId="formGroupAddress">
+          <input className="form-control"
             name="direccion"
             type="text"
             placeholder="Dirección"
             onChange={handleChange}
-            value={contactSelect && contactData.address}
+            value={contactSelected && contactSelected.direccion}
           />
-        </Form.Group>
-        <div style={styles.buttonGroup}>
-          <Button style={styles.btnEdit} onClick={() => requestPUT()}>
-            Editar
-          </Button>
-          <Button
-            style={styles.btnClose}
-            onClick={() => OpenCloseModal("UPDATE")}
-          >
-            Cancelar
-          </Button>
         </div>
-      </Form>
+        <div className="d-flex justify-content-center">
+          <button type="button" className="btn btn-success mx-3 w-50" onClick={() => requestPUT()}>
+            Editar
+          </button>
+          <button type="button" className="btn btn-danger mx-3 w-50" onClick={() => OpenCloseModal("UPDATE")} >
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
   );
 
   const bodyDelete = (
-    <div style={styles.modalDel}>
+    <div className="p-4">
       <p>
         Esta seguro que quiere eliminar el contacto{" "}
-        <b>{contactSelect && contactSelect.nombre}</b> ?
+        <b>{contactSelected && contactSelected.nombre}</b> ?
       </p>
 
       <div className="d-flex justify-content-center">
@@ -299,12 +288,10 @@ const Contacts = (props) => {
                       <b>apellidos:</b> {contact.apellido}
                     </li>
                     <li className="list-group-item">
-                      <b>telefono:</b>
-                      {contact.telefono}
+                      <b>telefono:</b> {contact.telefono}
                     </li>
                     <li className="list-group-item">
-                      <b>direccion:</b>
-                      {contact.direccion}
+                      <b>direccion:</b> {contact.direccion}
                     </li>
                   </ul>
                 </div>
